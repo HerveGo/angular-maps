@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+
+  <google-map height="600px" width="100%" [center]="mapCenter" [options]="mapOptions">
+    <map-marker #marker="mapMarker" [position]="mapCenter" [options]="markerOptions" (mapClick)="openInfo(marker)"></map-marker>
+    <!-- <map-marker
+      *ngFor="let marker of markers"
+      [position]="marker.position"
+      [label]="marker.label"
+      [title]="marker.title"
+      [options]="markerOptions"
+      (mapClick)="openInfo(marker)" (mapMouseover)="test($event)">
+    </map-marker> -->
+
+    <!-- <map-info-window>{{ markerInfoContent }}</map-info-window> -->
+    <map-info-window [innerHTML]="markerInfoContent"></map-info-window>
+  </google-map>
+  
+  <div class="button-row">
+    <button (click)="Lille()" mat-flat-button color="primary">Lille</button>
+    <button (click)="Paris()" mat-flat-button color="primary">Paris</button>
+    <button (click)="Marseille()" mat-flat-button color="primary">Marseille</button>
+    <button (click)="MyPosition()" mat-flat-button color="secondary">
+      <mat-icon>location_on</mat-icon>
+      Ma Position
+    </button>
+  </div>
+  <div>
+    <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Adresse</mat-label>
+        <input type="text" formControlName="address" matInput maxlength="200" placeholder="Adresse complète">
+
+      </mat-form-field>
+      <mat-divider inset></mat-divider>
+      <button type="submit" mat-flat-button color="primary" [disabled]="isWorking">
+        <mat-icon>search</mat-icon>
+        Rechercher
+      </button>
+
+    </form>
+  </div>
+</div>
