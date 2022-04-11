@@ -2,21 +2,25 @@
   <h1>{{ title }}</h1>
 
   <google-map height="600px" width="100%" [center]="mapCenter" [options]="mapOptions">
-    <map-marker #marker="mapMarker" [position]="mapCenter" [options]="markerOptions" (mapClick)="openInfo(marker)"></map-marker>
-    <!-- <map-marker
+    <!-- <map-marker #marker="mapMarker" [position]="mapCenter" [options]="markerOptions" (mapClick)="openInfo(marker)" (mapMouseover)="test($event)" (mapMouseout)="testClose($event)"></map-marker> -->
+    <map-marker
+      #markerElem="mapMarker"
       *ngFor="let marker of markers"
       [position]="marker.position"
       [label]="marker.label"
       [title]="marker.title"
-      [options]="markerOptions"
-      (mapClick)="openInfo(marker)" (mapMouseover)="test($event)">
-    </map-marker> -->
+      [icon]="marker.icon"
+      (mapMouseover)="openInfo(markerElem, marker.info)"
+      (mapMouseout)="closeInfo()"
+      >
+    </map-marker>
 
     <!-- <map-info-window>{{ markerInfoContent }}</map-info-window> -->
     <map-info-window [innerHTML]="markerInfoContent"></map-info-window>
   </google-map>
   
   <div class="button-row">
+    <button (click)="addRandomMarker()">Add Marker</button>
     <button (click)="Lille()" mat-flat-button color="primary">Lille</button>
     <button (click)="Paris()" mat-flat-button color="primary">Paris</button>
     <button (click)="Marseille()" mat-flat-button color="primary">Marseille</button>
@@ -24,6 +28,7 @@
       <mat-icon>location_on</mat-icon>
       Ma Position
     </button>
+    <mat-slider min="0" max="100" (input)="onInputChange($event)"></mat-slider>
   </div>
   <div>
     <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
